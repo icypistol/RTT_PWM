@@ -11,21 +11,26 @@
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <board.h>
+#include <Tasks.h>
 
 /* defined the LED0 pin: PB5 */
 #define LED0_PIN    GET_PIN(B, 5)
 /* defined the LED0 pin: PE5 */
 #define LED1_PIN    GET_PIN(E, 5)
 
-#define PWM_DEV_NAME            "pwm3"  /* PWM???? */
-#define PWM_DEV_CHANNEL         1       /* PWM?? */
-#define THREAD_PRIORITY         15      /* ????? */
-#define THREAD_STACK_SIZE       512     /* ????? */
-#define THREAD_TIMESLICE        5       /* ??????? */
+#define PWM_DEV_NAME            "pwm3"
+#define PWM_DEV_CHANNEL         1
+#define Factor_us								1000
+#define Factor_ms								1000000
+#define Factor_s								1000000000
+
+
 static rt_thread_t tid1 = RT_NULL;      /* ???? */
 struct rt_device_pwm *pwm_dev;          /* PWM???? */
-static rt_uint32_t period = 1300000000;     /* ???0.5ms,?????ns */
-static rt_uint32_t pulse = 1300000000;           /* PWM?????????? */
+//static rt_uint32_t factor_ms = 1*1000000;
+//static rt_uint32_t factor_s = 1*1000*1000000;
+static rt_uint32_t period = 50*Factor_ms;
+static rt_uint32_t pulse = 50*Factor_ms;
 
 /* ?? pwm_entry ????? */
 static void pwm_entry(void *parameter)
@@ -34,17 +39,29 @@ static void pwm_entry(void *parameter)
 
     while (1)
     {
-        rt_thread_mdelay(5000);
-        /* step 2??? PWM ???????,??????? */
-        rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, pulse);
-			pulse-=50000000;
-			if(pulse < 500) pulse=1300000000;
-//			rt_kprintf("pwm pulse is %d \n", pulse);
-			
+			count++;
+			rt_thread_mdelay(2000); //This function will let current thread delay for some milliseconds.
+        /* set period and pulse, unit is ns */
+        //rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, pulse);
+			if(count%2 ==1) 
+			{
+				rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, 40*Factor_ms);
+				rt_kprintf("pwm pulse is odd, equals to %d \n", count);
+			}
+			//pulse-=500*Factor_ms;
+			//if(pulse <= 1*Factor_ms) pulse=2*Factor_s;
+
+			else 
+			{
+				rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, 10*Factor_ms);
+				rt_kprintf("pwm pulse is even, equals to %d \n", count);
+			}
     }
     /* step 3??????????,???? PWM ????? */
     rt_pwm_disable(pwm_dev, PWM_DEV_CHANNEL);
 }
+
+
 
 int main(void)
 {
@@ -57,7 +74,7 @@ int main(void)
     }
 
     /* step 1.2??? PWM ?????????? */
-    rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, pulse);
+    rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, 40*Factor_ms);
     /* step 1.3??? PWM ??????? */
     rt_pwm_enable(pwm_dev, PWM_DEV_CHANNEL);
 
@@ -73,6 +90,7 @@ int main(void)
     if (tid1 != RT_NULL)
         rt_thread_startup(tid1);
 
+//		CallTasks();
     return RT_EOK;
 }
 
