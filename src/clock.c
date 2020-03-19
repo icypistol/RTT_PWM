@@ -13,10 +13,13 @@
  * 2010-07-13     Bernard      fix rt_tick_from_millisecond issue found by kuronca
  * 2011-06-26     Bernard      add rt_tick_set function.
  * 2018-11-22     Jesven       add per cpu tick
+ * 2020-03-19			ice					 enable cyclic tasks of 10ms and 20ms
  */
 
 #include <rthw.h>
 #include <rtthread.h>
+#include <Tasks.h>
+
 
 #ifdef RT_USING_SMP
 #define rt_tick rt_cpu_index(0)->tick
@@ -97,6 +100,23 @@ void rt_tick_increase(void)
 
     /* check timer */
     rt_timer_check();
+		
+//		if(rt_tick== 5) 
+//		{
+//		rt_sem_release(&Taskx2_run_sem);
+//		rt_sem_release(&Taskx1_run_sem);
+//		}
+		if(rt_tick%10 == 0)
+		{
+			rt_sem_release(&Taskx1_run_sem);
+			//rt_kprintf("tick count is %d \n.", rt_tick);
+		}
+		
+		if(rt_tick%20 == 0)
+		{
+			rt_sem_release(&Taskx2_run_sem);
+			//rt_kprintf("tick count is %d \n.", rt_tick);
+		}
 }
 
 /**
