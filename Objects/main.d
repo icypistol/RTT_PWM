@@ -64,3 +64,4 @@
 .\objects\main.o: .\include\rthw.h
 .\objects\main.o: .\bsp\stm32\libraries\HAL_Drivers\drv_gpio.h
 .\objects\main.o: .\bsp\stm32\warshipv3\board\board.h
+.\objects\main.o: .\include\Tasks.h

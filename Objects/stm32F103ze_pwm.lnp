@@ -14,6 +14,8 @@
 ".\objects\thread.o"
 ".\objects\timer.o"
 ".\objects\main.o"
+".\objects\process.o"
+".\objects\tasks.o"
 ".\objects\board.o"
 ".\objects\stm32f1xx_hal_msp.o"
 ".\objects\drv_gpio.o"

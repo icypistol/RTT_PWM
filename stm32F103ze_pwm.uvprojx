@@ -462,6 +462,16 @@
               <FileType>1</FileType>
               <FilePath>.\bsp\stm32\warshipv3\applications\main.c</FilePath>
             </File>
+            <File>
+              <FileName>Process.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\bsp\stm32\warshipv3\applications\Process.c</FilePath>
+            </File>
+            <File>
+              <FileName>Tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\bsp\stm32\warshipv3\applications\Tasks.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

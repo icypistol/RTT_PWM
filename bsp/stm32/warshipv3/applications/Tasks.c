@@ -5,6 +5,7 @@
  */
  
 #include <Tasks.h>
+#include <Process.h>
 
 
 struct rt_semaphore Taskx1_run_sem;
@@ -20,32 +21,35 @@ struct rt_device_pwm *pwm_dev;
 static rt_uint32_t period = 50*Factor_ms;
 static rt_uint32_t pulse = 50*Factor_ms;
 
-static void Func_thread_BaseX1(void *param)
+TASK_BODY(BaseX1)
 {
 	rt_int8_t count = 0;
-	while(count < 10)
+	while(count < 5)
 	{
 			rt_sem_take(&Taskx1_run_sem, RT_WAITING_FOREVER);
-
+			Run_prc_x1();
 			count++;
 			//rt_kprintf("BaseX1 is running for %d times \n.", count);
 		rt_kprintf("%d: 12345\n", count);
 			rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, 40*Factor_ms);
 	}
+	
 }
 
-static void Func_thread_X2(void *param)
+TASK_BODY(X2)
 {
 	rt_int8_t count = 0;
-	while(count < 10)
+	while(count < 5)
 	{
 		rt_sem_take(&Taskx2_run_sem, RT_WAITING_FOREVER);
+		Run_prc_x2();
 		count++;
 		//rt_kprintf("x2 is running for %d times \n.", count);
 		rt_kprintf("%d: abcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmn\n", count);
 		
 		rt_pwm_set(pwm_dev, PWM_DEV_CHANNEL, period, 10*Factor_ms);
 	}
+	
 }
 
 ALIGN(RT_ALIGN_SIZE)
@@ -65,7 +69,8 @@ void	CallTasks(void)
 	rt_pwm_enable(pwm_dev, PWM_DEV_CHANNEL);
 	rt_thread_init(&thread_BaseX1,
 							 "TaskX1",
-							 Func_thread_BaseX1,
+							 //Func_thread_BaseX1,
+							 TASK_NAME(BaseX1),
 							 RT_NULL,
 							 &Taskx1_stack[0],
 							 sizeof(Taskx1_stack),
@@ -74,7 +79,7 @@ rt_thread_startup(&thread_BaseX1);
 							 
 	rt_thread_init(&thread_x2,
 							 "TaskX2",
-							 Func_thread_X2,
+							 TASK_NAME(X2),
 							 RT_NULL,
 							 &Taskx2_stack[0],
 							 sizeof(Taskx2_stack),

@@ -101,11 +101,6 @@ void rt_tick_increase(void)
     /* check timer */
     rt_timer_check();
 		
-//		if(rt_tick== 5) 
-//		{
-//		rt_sem_release(&Taskx2_run_sem);
-//		rt_sem_release(&Taskx1_run_sem);
-//		}
 		if(rt_tick%10 == 0)
 		{
 			rt_sem_release(&Taskx1_run_sem);

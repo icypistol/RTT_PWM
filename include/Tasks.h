@@ -18,24 +18,19 @@
 #define Factor_us								1000
 #define Factor_ms								1000000
 #define Factor_s								1000000000
-
-
-
-extern struct rt_device_pwm *pwm_dev;
+#define TASK_BODY(x)  static void Func_thread_##x(void *param)
+#define TASK_NAME(x)  Func_thread_##x
+#define THREAD_PRIORITY         15
+#define THREAD_STACK_SIZE       512
+#define THREAD_TIMESLICE        5
 
 void	CallTasks(void);
-static void Func_thread_BaseX1(void *param);
-static void Func_thread_X2(void *param);
+TASK_BODY(BaseX1);
+TASK_BODY(X2);
 
-
-#define THREAD_PRIORITY         15      /* ????? */
-#define THREAD_STACK_SIZE       512     /* ????? */
-#define THREAD_TIMESLICE        5       /* ??????? */
-//ALIGN(RT_ALIGN_SIZE)
-//static char Taskx1_stack[256];
-//static char Taskx2_stack[256];
 extern struct rt_thread thread_BaseX1;
 extern struct rt_thread thread_x2;
 
 extern struct rt_semaphore Taskx1_run_sem;
 extern struct rt_semaphore Taskx2_run_sem;
+extern struct rt_device_pwm *pwm_dev;
