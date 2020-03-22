@@ -20,13 +20,21 @@
 #define Factor_s								1000000000
 #define TASK_BODY(x)  static void Func_thread_##x(void *param)
 #define TASK_NAME(x)  Func_thread_##x
+#define TIM_BODY(x)  static void Func_timer_##x(void *param)
+#define TIM_NAME(x)  Func_timer_##x
+
 #define THREAD_PRIORITY         15
 #define THREAD_STACK_SIZE       512
 #define THREAD_TIMESLICE        5
 
-void	CallTasks(void);
+void CallTasks(void);
+void Task_init(void);
+
 TASK_BODY(BaseX1);
 TASK_BODY(X2);
+
+TIM_BODY(X1);
+TIM_BODY(X2);
 
 extern struct rt_thread thread_BaseX1;
 extern struct rt_thread thread_x2;

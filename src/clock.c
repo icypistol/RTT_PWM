@@ -103,13 +103,13 @@ void rt_tick_increase(void)
 		
 		if(rt_tick%10 == 0)
 		{
-			rt_sem_release(&Taskx1_run_sem);
+			//rt_sem_release(&Taskx1_run_sem);
 			//rt_kprintf("tick count is %d \n.", rt_tick);
 		}
 		
 		if(rt_tick%20 == 0)
 		{
-			rt_sem_release(&Taskx2_run_sem);
+			//rt_sem_release(&Taskx2_run_sem);
 			//rt_kprintf("tick count is %d \n.", rt_tick);
 		}
 }

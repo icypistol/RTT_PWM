@@ -28,17 +28,19 @@ Project File Date:  03/21/2020
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\rt_thread\Keil_v5\ARM\ARMCC\Bin'
 Build target 'pwm'
 compiling Tasks.c...
-.\include\Tasks.h(36): warning:  #1-D: last line of file ends without a newline
+.\include\Tasks.h(44): warning:  #1-D: last line of file ends without a newline
   extern struct rt_device_pwm *pwm_dev;
 .\include\Process.h(20): warning:  #1-D: last line of file ends without a newline
   void Run_prc_x2(void);
-bsp\stm32\warshipv3\applications\Tasks.c(22): warning:  #177-D: variable "pulse"  was declared but never referenced
+bsp\stm32\warshipv3\applications\Tasks.c(119): warning:  #144-D: a value of type "void (*)(void)" cannot be used to initialize an entity of type "const init_fn_t"
+  INIT_COMPONENT_EXPORT(Task_init);
+bsp\stm32\warshipv3\applications\Tasks.c(24): warning:  #177-D: variable "pulse"  was declared but never referenced
   static rt_uint32_t pulse = 50*Factor_ms;
-bsp\stm32\warshipv3\applications\Tasks.c: 3 warnings, 0 errors
+bsp\stm32\warshipv3\applications\Tasks.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=49202 RO-data=7418 RW-data=896 ZI-data=5312  
+Program Size: Code=49394 RO-data=7566 RW-data=900 ZI-data=5404  
 FromELF: creating hex file...
-".\Objects\stm32F103ze_pwm.axf" - 0 Error(s), 3 Warning(s).
+".\Objects\stm32F103ze_pwm.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -52,7 +54,7 @@ Package Vendor: Keil
   C:\Users\qiuye\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:08
 </pre>
 </body>
 </html>

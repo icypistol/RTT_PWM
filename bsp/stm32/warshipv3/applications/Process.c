@@ -24,11 +24,17 @@ RT_NULL
 
 void prc_preRun_x1(void)
 {
+	rt_kprintf("proc main of x1 is running.\n");
 }
 
 void prc_main_x1(void)
 {
-	rt_kprintf("proc main of x1 is running.\n");
+	rt_int8_t count = 0;
+	while(count < 5)
+	{
+		count++;
+		rt_kprintf("%d: 12345\n", count);
+	}
 }
 
 void prc_postRun_x1(void)
@@ -37,11 +43,17 @@ void prc_postRun_x1(void)
 
 void prc_preRun_x2(void)
 {
+	rt_kprintf("proc main of x2 is running.\n");
 }
 
 void prc_main_x2(void)
 {
-	rt_kprintf("proc main of x2 is running.\n");
+	rt_int8_t count = 0;
+	while(count < 5)
+	{
+	count++;
+	rt_kprintf("%d: abcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmnabcdefghijklmnopqlmn\n", count);
+	}
 }
 
 void prc_postRun_x2(void)
@@ -50,6 +62,7 @@ void prc_postRun_x2(void)
 
 void Run_prc_x1(void)
 {
+	rt_kprintf("proc x1 is running.\n");
 	rt_uint8_t proc_id;
 	
 	proc_id = 0;
@@ -58,11 +71,12 @@ void Run_prc_x1(void)
 		c_Taskx1[proc_id]();
 		proc_id++;
 	}
-	rt_kprintf("proc x1 is running.\n");
+	
 }
 	
 void Run_prc_x2(void)
 {
+	rt_kprintf("proc x2 is running. \n");
 	rt_uint8_t proc_id;
 	
 	proc_id = 0;
@@ -71,5 +85,5 @@ void Run_prc_x2(void)
 		c_Taskx2[proc_id]();
 		proc_id++;
 	}
-	rt_kprintf("proc x2 is running. \n");
+	
 }
